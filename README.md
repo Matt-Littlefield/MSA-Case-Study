@@ -3,9 +3,9 @@
 ## How to run
 
 ### Server
-cd eureka-server
+cd eureka-server <br>
 mvn spring-boot:run
 
 ### Client
-cd eureka-client
+cd eureka-client <br>
 mvn spring-boot:run
