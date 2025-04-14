@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+
+spring:
+  application:
+    name: apigateway
+  cloud:
+    gateway:
+      routes:
+        - id: servicea
+          uri: lb://servicea
+          predicates:
+            - Path=/servicea/**
+          filters:
+            - RewritePath=/servicea/(?<segment>.*), /${segment}
+        - id: serviceb
+          uri: lb://serviceb
+          predicates:
+            - Path=/serviceb/**
+          filters:
+            - RewritePath=/serviceb/(?<segment>.*), /${segment}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
